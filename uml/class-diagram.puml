@@ -1,0 +1,30 @@
+@startuml
+skinparam packageStyle rectangle
+
+package "TCPServer" {
+  class "view.ServerApp" as ServerApp
+  class "model.ServerCore" as ServerCore
+  class "model.ClientHandler" as ClientHandler
+  class "model.Config" as ServerConfig
+
+  interface "ServerCore.Listener" as SListener
+
+  ServerApp ..> ServerCore : starts
+  ServerApp ..|> SListener : implements
+  ServerCore "1" o-- "*" ClientHandler : manages
+  ClientHandler --> ServerCore : callbacks
+  ServerConfig --> ServerApp : reads port
+}
+
+package "TCPClient" {
+  class "view.ClientApp" as ClientApp
+  class "model.ClientCore" as ClientCore
+  class "model.Config" as ClientConfig
+
+  interface "ClientCore.Listener" as CListener
+
+  ClientApp ..> ClientCore : uses
+  ClientApp ..|> CListener : implements
+  ClientConfig --> ClientApp : default host/port
+}
+@enduml

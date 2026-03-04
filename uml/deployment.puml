@@ -1,0 +1,11 @@
+@startuml
+node "Client Machine" {
+  artifact "tcpclient-1.0-SNAPSHOT.jar" as client
+}
+
+node "Server Machine" {
+  artifact "tcpserver-1.0-SNAPSHOT.jar" as server
+}
+
+client --> server : TCP Socket (host:port)\nMessages + Commands
+@enduml
